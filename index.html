@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script src="doAfter.js"></script>
+<script src="api.js"></script>
+<script src="axios.js"></script>
+<script>
+    // внутрь Promise передаем колбэк-функцию, которая собственно и есть та логика, которую промис обещает выполнить.
+    // let myPromise = new Promise((res) => {
+    //     console.log('Hello');
+    //     setTimeout(()=>{
+    //         res(Math.ceil(Math.random()*100))
+    //     },3000)
+    //     console.log(1)
+    //     console.log(2)
+    //     console.log(3)
+    // });
+    //
+    //
+    // // ниже по коду мы можем подписаться, на промис, чтобы он (промис) вызвал нашу функцию, когда он (промис) зарезолвится. Для этого передаём в метод then колбэк-функцию)
+    // myPromise.then((number) => {
+    //     console.log(`myPromise зарезолвился, и я узнал об этом ${number}`);
+    // })
+    // myPromise.then((number) => {
+    //     console.log(`myPromise2 зарезолвился, и я узнал об этом ${number}`);
+    // })
+    // const doAfter=(time)=>{
+    //     let myPromise2 = new Promise ((res) => {
+    //         setTimeout(()=>{
+    //             res()
+    //         },time*1000)
+    //     });
+    // return myPromise2
+    //
+    // }
+    // doAfter(5).then( () => console.log('я сработал через 5 секунд') );
+    // doAfter(3).then( () => console.log('а я сработал через 3 секунд') );
+    // doAfter(10).then( () => console.log('я сработал через 10 секунд') );
+
+
+    // let promise3 = doAfter(3);
+    // promise3.then( () => console.log('я сработал через 3 секунд') );
+    // promise3.then( () => console.log('и я тоже следом сработал через 3 секунд') );
+    // promise3.then( () => console.log('и я') );
+    // api.sendStudentsCountToItKamasutra(20)
+    //     .then(res => {
+    //         return res.data
+    //     }).then(data=>console.log(data))
+    let vacancies = 0
+    // api.getVacanciesCountFromMicrosoft()
+    //     .then(data => {
+    //         console.log(data.data);
+    //         vacancies+= data.data.vacancies
+    //     });
+    //
+    // api.getVacanciesCountFromGoogle()
+    //     .then(data => {
+    //         console.log(data.data);
+    //         vacancies+= data.data.vacancies
+    //     });
+    // Promise.all([
+    //     api.getVacanciesCountFromMicrosoft()
+    //         .then(data => {
+    //             console.log(data.data);
+    //             vacancies+= data.data.vacancies
+    //         }),
+    //
+    //     api.getVacanciesCountFromGoogle()
+    //         .then(data => {
+    //             console.log(data.data);
+    //             vacancies+= data.data.vacancies
+    //         })
+    // ])
+    //     api.sendStudentsCountToItKamasutra(vacancies)
+    //         .then(data => {
+    //             console.log(vacancies);
+    //         });
+    // function LoadVacanciesPromiseVersion(){
+    //
+    // let msVacancies
+    // api.getVacanciesCountFromMicrosoft()
+    //     .then(msCount => {
+    //         console.log(msCount)
+    //         msVacancies = msCount
+    //         return api.getVacanciesCountFromGoogle()
+    //     })
+    //     .then(gCount => {
+    //         console.log(gCount)
+    //         return api.sendStudentsCountToItKamasutra(gCount+msVacancies)
+    //     }).then(kamasutraCount=>console.log(kamasutraCount.data))
+    // }
+    // LoadVacanciesPromiseVersion()
+
+    async function LoadVacanciesAsyncAwaitVersion() {
+        debugger
+        let msCount = await api.getVacanciesCountFromMicrosoft()
+        console.log(msCount)
+        let gCount = await api.getVacanciesCountFromGoogle()
+        console.log(gCount)
+        let res = await api.sendStudentsCountToItKamasutra(gCount + msCount)
+        console.log(res.data)
+        // let msVacancies
+        //  // api.getVacanciesCountFromMicrosoft()
+        //  //     .then(msCount => {
+        //  //         console.log(msCount)
+        //  //         msVacancies = msCount
+        //  //         return api.getVacanciesCountFromGoogle()
+        //  //     })
+        //      .then(gCount => {
+        //          console.log(gCount)
+        //          return api.sendStudentsCountToItKamasutra(gCount+msVacancies)
+        //      }).then(kamasutraCount=>console.log(kamasutraCount.data))
+    }
+
+    LoadVacanciesAsyncAwaitVersion()
+
+    // msPromise.then(()=>console.log('MS finish'))
+    // gPromise.then(()=>console.log('Google finish'))
+
+    // Promise.all([msPromise, gPromise])
+    //     .then((res) => {
+    //         let resMicrosoft = res[0]
+    //         let resGoogle = res[1]
+    //         return api.sendStudentsCountToItKamasutra(resMicrosoft + resGoogle)
+    //     })
+    //     .then(res => {
+    //         console.log(res.data)
+    //     })
+    //     api.getVacanciesCountFromMicrosoft().then(res=>console.log(res))
+    //     api.getVacanciesCountFromGoogle().then(res=>console.log(res))
+</script>
+</body>
+</html>
+
